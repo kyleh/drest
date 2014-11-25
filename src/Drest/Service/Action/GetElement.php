@@ -25,6 +25,8 @@ class GetElement extends AbstractAction
             $qb->setParameter($key, $value);
         }
 
+        $classInfo = $em->getClassMetadata($classMetaData->getClassName());
+
         // add soft delete check
         if ($classInfo->hasField('deleted')) {
             $qb->andWhere($qb->expr()->isNull($elementName . '.deleted'));

@@ -26,7 +26,9 @@ class GetElement extends AbstractAction
         }
 
         // add soft delete check
-        $qb->expr()->isNotNull($elementName . 'deleted');
+        if ($classInfo->hasField('deleted')) {
+            $qb->andWhere($qb->expr()->isNull($elementName . '.deleted'));
+        }
 
         try {
             $resultSet = $this->createResultSet($qb->getQuery()->getSingleResult(ORM\Query::HYDRATE_ARRAY));
